@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../assets/img/pizza-logo.svg';
 import Button from './Button';
 
-const Header = (props) => {
+const Header = () => {
   return (
     <div className="header">
       <div className="container">
