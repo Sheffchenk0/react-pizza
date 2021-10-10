@@ -15,6 +15,9 @@
         letter-spacing: 1%;
         margin-bottom: 20px;
     }
+    &__disabled {
+        color: #a7a7a7;
+    }
     &__selector {
         display: flex;
         background-color: #f3f3f3;
