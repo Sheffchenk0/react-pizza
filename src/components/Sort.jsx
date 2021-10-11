@@ -1,15 +1,12 @@
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 
-const Sort = ({ list }) => {
+const Sort = ({ list, onClick, sortType }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentSort, setCurrentSort] = useState(0);
   let sort = useRef();
   const toggleVisible = () => {
     setIsVisible((bool) => !bool);
-  };
-  const setSort = (event) => {
-    setCurrentSort(event.target.id);
   };
   useEffect(() => {
     let onClick = (event) => {
@@ -38,7 +35,7 @@ const Sort = ({ list }) => {
         </svg>
         <b>Сортировка по:</b>
         <span ref={sort} onClick={toggleVisible}>
-          {list && list[currentSort]}
+          {list && list[sortType]}
         </span>
       </div>
       {isVisible && (
@@ -47,10 +44,12 @@ const Sort = ({ list }) => {
             {list.map((title, index) => {
               return (
                 <li
+                  onClick={() => {
+                    onClick(index);
+                  }}
                   key={index}
-                  onClick={setSort}
                   id={index}
-                  className={classNames({ active: +currentSort === index })}>
+                  className={classNames({ active: +sortType === index })}>
                   {title}
                 </li>
               );
@@ -62,4 +61,4 @@ const Sort = ({ list }) => {
   );
 };
 
-export default Sort;
+export default React.memo(Sort);

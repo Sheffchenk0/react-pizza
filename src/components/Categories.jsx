@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
-const Categories = ({ items, currentItem = 0 }) => {
-  const [currentCategoryId, setCurrentCategoryId] = useState(currentItem);
-  const onCategoryClick = (event) => {
-    setCurrentCategoryId(event.target.id);
-  };
+const Categories = ({ items, currentCategoryId, setCategory }) => {
   return (
     <div className="categories">
       <ul>
         {items &&
           items.map((name, index) => {
             let isActive;
-            if (index === +currentCategoryId) {
+            if (index === +currentCategoryId + 1) {
               isActive = true;
             }
             return (
               <li
-                onClick={onCategoryClick}
+                onClick={() => {
+                  setCategory(index - 1);
+                }}
                 key={name + '_' + index}
                 id={index}
                 className={classNames({ active: isActive })}>
@@ -29,4 +27,4 @@ const Categories = ({ items, currentItem = 0 }) => {
   );
 };
 
-export default Categories;
+export default React.memo(Categories);

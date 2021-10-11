@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
+import Button from './Button';
 import Sizes from './Sizes';
 import Types from './Types';
 
-const PizzaItem = ({ name, img, types, sizes, price, rating, defaultSizes, defaultTypes }) => {
+const PizzaItem = ({
+  count,
+  name,
+  img,
+  types,
+  sizes,
+  price,
+  rating,
+  defaultSizes,
+  defaultTypes,
+  addPizza,
+  id,
+}) => {
   const [currentType, setCurrentType] = useState(types[0]);
   const [currentSize, setCurrentSize] = useState(sizes[0]);
   const onChangeCurrentSize = (id, disabled) => {
@@ -14,6 +27,9 @@ const PizzaItem = ({ name, img, types, sizes, price, rating, defaultSizes, defau
     if (disabled) {
       setCurrentSize(id);
     }
+  };
+  const onAddToCart = () => {
+    addPizza(id, currentType, currentSize, count);
   };
   return (
     <div className="pizza-block">
@@ -36,7 +52,7 @@ const PizzaItem = ({ name, img, types, sizes, price, rating, defaultSizes, defau
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <Button className="button button--outline button--add" onClick={onAddToCart}>
           <svg
             width={12}
             height={12}
@@ -49,8 +65,8 @@ const PizzaItem = ({ name, img, types, sizes, price, rating, defaultSizes, defau
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          {count > 0 && <i>{count}</i>}
+        </Button>
       </div>
     </div>
   );

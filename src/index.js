@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import store from './redux/redux-store';
 
 let rerender = (store) => {
+  console.log('render');
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
