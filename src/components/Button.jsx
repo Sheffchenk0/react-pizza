@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 
 const Button = ({ className, children, ...otherProps }) => {
   return (
@@ -9,4 +8,4 @@ const Button = ({ className, children, ...otherProps }) => {
   );
 };
 
-export default Button;
+export default React.memo(Button);

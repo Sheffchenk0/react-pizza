@@ -25,4 +25,4 @@ const Sizes = ({ sizes, defaultSizes, onClick, currentSize }) => {
   );
 };
 
-export default Sizes;
+export default React.memo(Sizes);

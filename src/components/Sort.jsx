@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const Sort = ({ list, onClick, sortType }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [currentSort, setCurrentSort] = useState(0);
   let sort = useRef();
   const toggleVisible = () => {
     setIsVisible((bool) => !bool);

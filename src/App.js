@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const HomeContainer = React.lazy(() => import('./pages/HomeContainer'));
 const Page404 = React.lazy(() => import('./pages/Page404'));
-const Cart = React.lazy(() => import('./pages/Cart'));
+const Cart = React.lazy(() => import('./pages/CartContainer'));
 
 function App(props) {
   return (

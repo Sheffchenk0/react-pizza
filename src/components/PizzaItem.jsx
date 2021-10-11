@@ -16,6 +16,7 @@ const PizzaItem = ({
   addPizza,
   id,
 }) => {
+  console.log(count);
   const [currentType, setCurrentType] = useState(types[0]);
   const [currentSize, setCurrentSize] = useState(sizes[0]);
   const onChangeCurrentSize = (id, disabled) => {
@@ -29,7 +30,7 @@ const PizzaItem = ({
     }
   };
   const onAddToCart = () => {
-    addPizza(id, currentType, currentSize, count);
+    addPizza(id, currentType, currentSize, count, name, img, price);
   };
   return (
     <div className="pizza-block">
@@ -65,7 +66,6 @@ const PizzaItem = ({
             />
           </svg>
           <span>Добавить</span>
-          {count > 0 && <i>{count}</i>}
         </Button>
       </div>
     </div>

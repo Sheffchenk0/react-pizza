@@ -17,29 +17,8 @@ const initialState = {
   totalPrice: 0,
   totalCartItems: 0,
 };
-function isEqual(object1, object2) {
-  const props1 = Object.getOwnPropertyNames(object1);
-  const props2 = Object.getOwnPropertyNames(object2);
 
-  if (props1.length !== props2.length) {
-    return false;
-  }
-
-  for (let i = 0; i < props1.length; i += 1) {
-    const prop = props1[i];
-    const bothAreObjects = typeof object1[prop] === 'object' && typeof object2[prop] === 'object';
-
-    if (
-      (!bothAreObjects && object1[prop] !== object2[prop]) ||
-      (bothAreObjects && !isEqual(object1[prop], object2[prop]))
-    ) {
-      return false;
-    }
-  }
-
-  return true;
-}
-export default (state = initialState, { type, payload }) => {
+const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_PIZZAS:
       return { ...state, pizzas: payload.pizzas };
@@ -52,6 +31,7 @@ export default (state = initialState, { type, payload }) => {
       let price = cPizza.price;
       for (let index = 0; index < state.cart.length; index++) {
         const element = state.cart[index];
+        console.log(element, payload.pizza);
         if (isEqual(element, payload.pizza)) {
           let obj = {
             ...state,
@@ -82,6 +62,9 @@ export default (state = initialState, { type, payload }) => {
             id: payload.pizza.id,
             type: payload.pizza.type,
             size: payload.pizza.size,
+            name: payload.pizza.name,
+            img: payload.pizza.img,
+            price: payload.pizza.price,
             count: 1,
           },
         ],
@@ -91,7 +74,6 @@ export default (state = initialState, { type, payload }) => {
       return state;
   }
 };
-
 export const setPizzasInState = (pizzas) => {
   return { type: SET_PIZZAS, payload: { pizzas } };
 };
@@ -102,10 +84,12 @@ export const setCategory = (currentCategoryId) => {
 export const setSort = (sortType) => {
   return { type: SET_SORT, payload: { sortType } };
 };
-export const addPizza = (id, currentType, currentSize, count = 0) => {
+export const addPizza = (id, currentType, currentSize, count = 0, name, img, price) => {
   return {
     type: ADD_PIZZA,
-    payload: { pizza: { id, type: currentType, size: currentSize, count: count } },
+    payload: {
+      pizza: { id, type: currentType, size: currentSize, name, img, price, count: count },
+    },
   };
 };
 export const setPizzas = () => {
@@ -114,3 +98,27 @@ export const setPizzas = () => {
     dispatch(setPizzasInState(response.pizzas));
   };
 };
+function isEqual(object1, object2) {
+  const props1 = Object.getOwnPropertyNames(object1);
+  const props2 = Object.getOwnPropertyNames(object2);
+
+  if (props1.length !== props2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < props1.length; i += 1) {
+    const prop = props1[i];
+    const bothAreObjects = typeof object1[prop] === 'object' && typeof object2[prop] === 'object';
+
+    if (
+      (!bothAreObjects && object1[prop] !== object2[prop]) ||
+      (bothAreObjects && !isEqual(object1[prop], object2[prop]))
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+export default reducer;
