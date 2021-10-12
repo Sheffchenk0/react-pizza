@@ -16,7 +16,6 @@ const PizzaItem = ({
   addPizza,
   id,
 }) => {
-  console.log(count);
   const [currentType, setCurrentType] = useState(types[0]);
   const [currentSize, setCurrentSize] = useState(sizes[0]);
   const onChangeCurrentSize = (id, disabled) => {

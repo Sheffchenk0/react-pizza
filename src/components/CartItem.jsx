@@ -1,6 +1,17 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-const Cartitem = ({ img, name, type, size, count, price }) => {
+const Cartitem = ({
+  img,
+  name,
+  type,
+  size,
+  count,
+  price,
+  incrementCartItem,
+  decrementCartItem,
+  removeItem,
+}) => {
   const typeNames = ['традиционное', 'тонкое'];
   return (
     <div className="cart__item">
@@ -14,7 +25,9 @@ const Cartitem = ({ img, name, type, size, count, price }) => {
         </p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <div
+          onClick={decrementCartItem}
+          className="button button--outline button--circle cart__item-count-minus">
           <svg
             width={10}
             height={10}
@@ -32,7 +45,9 @@ const Cartitem = ({ img, name, type, size, count, price }) => {
           </svg>
         </div>
         <b>{count}</b>
-        <div className="button button--outline button--circle cart__item-count-plus">
+        <div
+          onClick={incrementCartItem}
+          className="button button--outline button--circle cart__item-count-plus">
           <svg
             width={10}
             height={10}
@@ -54,7 +69,7 @@ const Cartitem = ({ img, name, type, size, count, price }) => {
         <b>{price} ₽</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle">
+        <div onClick={removeItem} className="button button--outline button--circle">
           <svg
             width={10}
             height={10}
@@ -74,6 +89,15 @@ const Cartitem = ({ img, name, type, size, count, price }) => {
       </div>
     </div>
   );
+};
+
+Cartitem.propTypes = {
+  count: PropTypes.number.isRequired,
+  img: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  size: PropTypes.number.isRequired,
+  type: PropTypes.number.isRequired,
 };
 
 export default Cartitem;

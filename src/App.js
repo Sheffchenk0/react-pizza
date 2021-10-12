@@ -1,13 +1,21 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Switch } from 'react-router';
 import Header from './components/Header';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const HomeContainer = React.lazy(() => import('./pages/HomeContainer'));
 const Page404 = React.lazy(() => import('./pages/Page404'));
 const Cart = React.lazy(() => import('./pages/CartContainer'));
 
 function App(props) {
+  const state = useSelector((state) => ({
+    cart: state.home.cart,
+  }));
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: 'UPDATE_TOTAL' });
+  }, [state.cart]);
   return (
     <div className="wrapper">
       <Header />
@@ -23,4 +31,4 @@ function App(props) {
     </div>
   );
 }
-export default connect()(App);
+export default App;

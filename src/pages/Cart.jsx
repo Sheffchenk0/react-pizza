@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Cartitem from '../components/CartItem';
 
-const Cart = ({ cart, totalPrice, totalCartItems }) => {
+const Cart = ({ cart, totalPrice, totalCartItems, changeCount, removeItem }) => {
   return (
     <div className="container container--cart">
       <div className="cart">
@@ -80,7 +80,22 @@ const Cart = ({ cart, totalPrice, totalCartItems }) => {
         </div>
         <div className="content__items">
           {cart.map((item, index) => {
-            return <Cartitem key={index} {...item} />;
+            return (
+              <Cartitem
+                key={index}
+                decrementCartItem={() => {
+                  return changeCount(index, -1);
+                }}
+                incrementCartItem={() => {
+                  return changeCount(index, 1);
+                }}
+                removeItem={() => {
+                  return removeItem(index);
+                }}
+                count={item.count}
+                {...item.product}
+              />
+            );
           })}
         </div>
         <div className="cart__bottom">

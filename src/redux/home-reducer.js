@@ -4,6 +4,9 @@ const SET_PIZZAS = 'SET_PIZZAS';
 const SET_CATEGORY = 'SET_CATEGORY';
 const SET_SORT = 'SET_SORT';
 const ADD_PIZZA = 'ADD_PIZZA';
+const CHANGE_COUNT = 'CHANGE_COUNT';
+const REMOVE_ITEM = 'REMOVE_ITEM';
+const UPDATE_TOTAL = 'UPDATE_TOTAL';
 
 const initialState = {
   pizzas: [],
@@ -26,20 +29,56 @@ const reducer = (state = initialState, { type, payload }) => {
       return { ...state, currentCategoryId: payload.currentCategoryId };
     case SET_SORT:
       return { ...state, sortType: payload.sortType };
+    case UPDATE_TOTAL:
+      const totalCartItems = state.cart.reduce((previousValue, currentValue) => {
+        return previousValue + currentValue.count;
+      }, 0);
+      const totalPrice = state.cart.reduce((previousValue, currentValue) => {
+        return previousValue + currentValue.count * currentValue.product.price;
+      }, 0);
+      return { ...state, totalCartItems, totalPrice };
+    case REMOVE_ITEM:
+      if (state.cart.length && state.cart[payload.id]) {
+        let arr = [...state.cart];
+        arr.splice(payload.id, 1);
+        return { ...state, cart: arr };
+      }
+      return state;
+    case CHANGE_COUNT:
+      if (state.cart.length && state.cart[payload.id]) {
+        if (payload.number < 0) {
+          if (state.cart[payload.id].count <= 1) {
+            return state;
+          }
+        }
+        let arr = [...state.cart];
+        let el = {
+          ...state.cart[payload.id],
+          count: state.cart[payload.id].count + payload.number,
+        };
+        arr[payload.id] = el;
+        return { ...state, cart: arr };
+      }
+      console.log('wrong');
+      return state;
     case ADD_PIZZA:
-      let cPizza = state.pizzas.find((pizza) => pizza.id === payload.pizza.id) || { price: 0 };
-      let price = cPizza.price;
+      console.log(payload);
+      // let cPizza = state.pizzas.find((pizza) => pizza.id === payload.pizza.product.id) || {
+      //   price: 0,
+      // };
+      // let price = cPizza.price;
       for (let index = 0; index < state.cart.length; index++) {
         const element = state.cart[index];
         console.log(element, payload.pizza);
-        if (isEqual(element, payload.pizza)) {
+        if (isEqual(element.product, payload.pizza.product)) {
           let obj = {
             ...state,
-            totalPrice: state.totalPrice + price,
-            totalCartItems: state.totalCartItems + 1,
+            // totalPrice: state.totalPrice + price,
+            // totalCartItems: state.totalCartItems + 1,
             cart: [
               ...[...state.cart].map((el) => {
-                if (+el.id === +state.cart[index].id) {
+                // +el.id === +state.cart[index].id
+                if (isEqual(el.product, state.cart[index].product)) {
                   return {
                     ...element,
                     count: element.count + 1,
@@ -54,18 +93,20 @@ const reducer = (state = initialState, { type, payload }) => {
       }
       let obj = {
         ...state,
-        totalPrice: state.totalPrice + price,
-        totalCartItems: state.totalCartItems + 1,
+        // totalPrice: state.totalPrice + price,
+        // totalCartItems: state.totalCartItems + 1,
         cart: [
           ...state.cart,
           {
-            id: payload.pizza.id,
-            type: payload.pizza.type,
-            size: payload.pizza.size,
-            name: payload.pizza.name,
-            img: payload.pizza.img,
-            price: payload.pizza.price,
             count: 1,
+            product: {
+              id: payload.pizza.product.id,
+              type: payload.pizza.product.type,
+              size: payload.pizza.product.size,
+              name: payload.pizza.product.name,
+              img: payload.pizza.product.img,
+              price: payload.pizza.product.price,
+            },
           },
         ],
       };
@@ -74,10 +115,11 @@ const reducer = (state = initialState, { type, payload }) => {
       return state;
   }
 };
+
+// Action creators
 export const setPizzasInState = (pizzas) => {
   return { type: SET_PIZZAS, payload: { pizzas } };
 };
-
 export const setCategory = (currentCategoryId) => {
   return { type: SET_CATEGORY, payload: { currentCategoryId } };
 };
@@ -88,16 +130,35 @@ export const addPizza = (id, currentType, currentSize, count = 0, name, img, pri
   return {
     type: ADD_PIZZA,
     payload: {
-      pizza: { id, type: currentType, size: currentSize, name, img, price, count: count },
+      pizza: {
+        count: count,
+        product: {
+          id,
+          type: currentType,
+          size: currentSize,
+          name,
+          img,
+          price,
+        },
+      },
     },
   };
 };
+export const changeCount = (id, number) => {
+  return { type: CHANGE_COUNT, payload: { id, number } };
+};
+export const removeItem = (id) => {
+  return { type: REMOVE_ITEM, payload: { id } };
+};
+
+// Thunks
 export const setPizzas = () => {
   return async (dispatch) => {
     const response = await API.getPizzas();
     dispatch(setPizzasInState(response.pizzas));
   };
 };
+
 function isEqual(object1, object2) {
   const props1 = Object.getOwnPropertyNames(object1);
   const props2 = Object.getOwnPropertyNames(object2);

@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { changeCount, removeItem } from '../redux/home-reducer';
 import Cart from './Cart';
 import CartEmpty from './CartEmpty';
 
 export const CartContainer = ({ cart, ...otherProps }) => {
-  console.log('dadwa');
-  console.log(cart);
   if (!cart.length) {
     return <CartEmpty />;
   }
@@ -17,7 +16,9 @@ const mapStateToProps = (state) => ({
   totalPrice: state.home.totalPrice,
   totalCartItems: state.home.totalCartItems,
 });
-
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  changeCount,
+  removeItem,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartContainer);
