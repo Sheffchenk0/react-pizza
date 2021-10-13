@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Cartitem from '../components/CartItem';
 
-const Cart = ({ cart, totalPrice, totalCartItems, changeCount, removeItem }) => {
+const Cart = ({ cart, totalPrice, totalCartItems, changeCount, removeItem, clearCart }) => {
   return (
     <div className="container container--cart">
       <div className="cart">
@@ -39,7 +39,7 @@ const Cart = ({ cart, totalPrice, totalCartItems, changeCount, removeItem }) => 
             </svg>
             Корзина
           </h2>
-          <div className="cart__clear">
+          <div onClick={clearCart} className="cart__clear">
             <svg
               width={20}
               height={20}

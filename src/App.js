@@ -8,7 +8,7 @@ const HomeContainer = React.lazy(() => import('./pages/HomeContainer'));
 const Page404 = React.lazy(() => import('./pages/Page404'));
 const Cart = React.lazy(() => import('./pages/CartContainer'));
 
-function App(props) {
+function App() {
   const state = useSelector((state) => ({
     cart: state.home.cart,
   }));

@@ -4,6 +4,19 @@ import Categories from '../components/Categories';
 import PizzaItem from '../components/PizzaItem';
 import Sort from '../components/Sort';
 
+const getSort = (a, b, sortType) => {
+  switch (sortType) {
+    case 0:
+      return a.rating - b.rating;
+    case 1:
+      return a.price - b.price;
+    case 2:
+      return b.price - a.price;
+    default:
+      throw Error('uncorret sort id' + sortType);
+  }
+};
+
 const Home = ({
   pizzas,
   defaultSizes,
@@ -34,6 +47,7 @@ const Home = ({
       return (
         <PizzaItem
           id={pizza.id}
+          category={pizza.category}
           name={pizza.name}
           img={pizza.imageUrl}
           price={pizza.price}
@@ -61,7 +75,16 @@ const Home = ({
         <Sort list={sort} sortType={sortType} onClick={setSort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{elements}</div>
+      <div className="content__items">
+        {elements &&
+          elements
+            .filter((el) => {
+              if (el.props.category === currentCategoryId || currentCategoryId === -1) {
+                return true;
+              }
+            })
+            .sort((a, b) => getSort(a.props, b.props, sortType))}
+      </div>
     </div>
   );
 };

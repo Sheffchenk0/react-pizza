@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { changeCount, removeItem } from '../redux/home-reducer';
+import { changeCount, removeItem, clearCart } from '../redux/home-reducer';
 import Cart from './Cart';
 import CartEmpty from './CartEmpty';
 
@@ -19,6 +19,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   changeCount,
   removeItem,
+  clearCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartContainer);

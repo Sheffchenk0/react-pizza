@@ -7,6 +7,7 @@ const ADD_PIZZA = 'ADD_PIZZA';
 const CHANGE_COUNT = 'CHANGE_COUNT';
 const REMOVE_ITEM = 'REMOVE_ITEM';
 const UPDATE_TOTAL = 'UPDATE_TOTAL';
+const CLEAR_CART = 'CLEAR_CART';
 
 const initialState = {
   pizzas: [],
@@ -29,6 +30,8 @@ const reducer = (state = initialState, { type, payload }) => {
       return { ...state, currentCategoryId: payload.currentCategoryId };
     case SET_SORT:
       return { ...state, sortType: payload.sortType };
+    case CLEAR_CART:
+      return { ...state, cart: [] };
     case UPDATE_TOTAL:
       const totalCartItems = state.cart.reduce((previousValue, currentValue) => {
         return previousValue + currentValue.count;
@@ -59,25 +62,15 @@ const reducer = (state = initialState, { type, payload }) => {
         arr[payload.id] = el;
         return { ...state, cart: arr };
       }
-      console.log('wrong');
       return state;
     case ADD_PIZZA:
-      console.log(payload);
-      // let cPizza = state.pizzas.find((pizza) => pizza.id === payload.pizza.product.id) || {
-      //   price: 0,
-      // };
-      // let price = cPizza.price;
       for (let index = 0; index < state.cart.length; index++) {
         const element = state.cart[index];
-        console.log(element, payload.pizza);
         if (isEqual(element.product, payload.pizza.product)) {
           let obj = {
             ...state,
-            // totalPrice: state.totalPrice + price,
-            // totalCartItems: state.totalCartItems + 1,
             cart: [
               ...[...state.cart].map((el) => {
-                // +el.id === +state.cart[index].id
                 if (isEqual(el.product, state.cart[index].product)) {
                   return {
                     ...element,
@@ -93,8 +86,6 @@ const reducer = (state = initialState, { type, payload }) => {
       }
       let obj = {
         ...state,
-        // totalPrice: state.totalPrice + price,
-        // totalCartItems: state.totalCartItems + 1,
         cart: [
           ...state.cart,
           {
@@ -149,6 +140,9 @@ export const changeCount = (id, number) => {
 };
 export const removeItem = (id) => {
   return { type: REMOVE_ITEM, payload: { id } };
+};
+export const clearCart = () => {
+  return { type: CLEAR_CART };
 };
 
 // Thunks
