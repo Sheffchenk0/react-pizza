@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { memo, Suspense, useEffect } from 'react';
 import { Route, Switch } from 'react-router';
 import Header from './components/Header';
 import { connect, useSelector } from 'react-redux';
@@ -22,8 +22,8 @@ function App() {
       <div className="content">
         <Suspense fallback={<div></div>}>
           <Switch>
-            <Route exact path="/" render={() => <HomeContainer />} />
-            <Route path="/cart" render={() => <Cart />} />
+            <Route exact path="/react-pizza/" render={() => <HomeContainer />} />
+            <Route path="/react-pizza/cart" render={() => <Cart />} />
             <Route path="*" render={() => <Page404 />} />
           </Switch>
         </Suspense>
@@ -31,4 +31,4 @@ function App() {
     </div>
   );
 }
-export default App;
+export default memo(App);

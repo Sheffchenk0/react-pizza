@@ -13,7 +13,7 @@ const Cartempty = () => {
             Для того, чтобы заказать пиццу, перейди на главную страницу.
           </p>
           <img src={image} alt="Empty cart" />
-          <Link to="/" className="button button--black">
+          <Link to="/react-pizza/" className="button button--black">
             <span>Вернуться назад</span>
           </Link>
         </div>

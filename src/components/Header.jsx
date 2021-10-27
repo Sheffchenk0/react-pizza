@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to="/react-pizza/">
           <div className="header__logo">
             <img width={38} src={logo} alt="Pizza logo" />
             <div>
@@ -20,7 +20,7 @@ const Header = () => {
           </div>
         </Link>
         <div className="header__cart">
-          <Link to="/cart">
+          <Link to="/react-pizza/cart">
             <Button className="button button--cart">
               <span>{state.totalPrice || 0} ₽</span>
               <div className="button__delimiter" />
