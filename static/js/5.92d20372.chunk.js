@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-pizza"]=this["webpackJsonpreact-pizza"]||[]).push([[5],{73:function(e,i,t){"use strict";t.r(i);t(0);var n=t(1);i.default=function(){return Object(n.jsx)("div",{children:"404 page is undefined"})}}}]);
+//# sourceMappingURL=5.92d20372.chunk.js.map

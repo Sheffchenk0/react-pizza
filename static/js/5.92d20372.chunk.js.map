@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/Page404.jsx"],"names":["Page404"],"mappings":"iHAAA,uBAMeA,UAJC,WACd,OAAO","file":"static/js/5.92d20372.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nconst Page404 = () => {\r\n  return <div>404 page is undefined</div>;\r\n};\r\n\r\nexport default Page404;\r\n"],"sourceRoot":""}
